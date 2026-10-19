@@ -5,7 +5,7 @@ const scenes=Object.fromEntries([...document.querySelectorAll('[data-scene]')].m
 const chapter=$('#chapter-label'), labels=['01 — CONSTRUIRE','02 — TOUT AU MÊME ENDROIT','03 — LA MÉTHODE','04 — CHAQUE ÉTAPE','05 — SE DISTINGUER','06 — PRENDRE SA PLACE','07 — L’EXPÉRIENCE','08 — ON EN PARLE'];
 let W=innerWidth,H=stage.clientHeight,mobile=W<901,t=0,playing=false,lastTime=0,autoT=0,initialized=false,software=false,motionClock=0,motionPaused=false,routeActive=-1;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-let renderer,scene,camera,assembly,human,crane,roadGroup,roadHuman,gridGroup,goldHuman,flyHuman,arrivalGroup,spotlightGroup,path,materialBlack,materialGold,materialGray,materialWhite;
+let renderer,scene,camera,assembly,human,crane,roadGroup,roadHuman,guideHuman,gridGroup,goldHuman,flyHuman,arrivalGroup,spotlightGroup,path,materialBlack,materialGold,materialGray,materialWhite;
 const boxGeometry=new THREE.BoxGeometry(1,1,1),up=new THREE.Vector3(0,1,0);
 const groups=[];
 function mat(color){return new THREE.MeshStandardMaterial({color,roughness:.34,metalness:.16,flatShading:false});}
@@ -90,7 +90,8 @@ function setupWorld(){
  for(let i=0;i<=N;i++){const q=path.getPoint(i/N),d=path.getTangent(i/N),n=new THREE.Vector3(-d.z,0,d.x).normalize().multiplyScalar(width/2);vertices.push(q.x+n.x,0,q.z+n.z,q.x-n.x,0,q.z-n.z);if(i<N){const k=i*2;indices.push(k,k+1,k+2,k+1,k+3,k+2);}}
  const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geo.setIndex(indices);geo.computeVertexNormals();const road=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color:0x111111,side:THREE.DoubleSide}));roadGroup.add(road);
  for(let i=0;i<65;i++){const a=i/65,q=path.getPoint(a),d=path.getTangent(a);const dash=box(roadGroup,[.025,.012,.16],[q.x,.01,q.z],new THREE.MeshBasicMaterial({color:0x565656}));dash.rotation.y=Math.atan2(d.x,d.z);}
- roadHuman=person(materialWhite,false);roadHuman.scale.setScalar(.34);roadGroup.add(roadHuman);
+ roadHuman=person(materialWhite,false);roadHuman.scale.setScalar(.5);roadGroup.add(roadHuman);
+ guideHuman=person(mat('#ff4328'),false);guideHuman.scale.setScalar(.55);roadGroup.add(guideHuman);
  gridGroup=new THREE.Group();scene.add(gridGroup);groups.push(gridGroup);gridGroup.userData.people=[];
  for(let row=-3;row<=3;row++)for(let col=-2;col<=2;col++){const gold=row===0&&col===0;const g=person(gold?materialGold:materialGray,gold);g.position.set(col*1.8,0,row*2.45);g.scale.setScalar(gold?1.05:.9);g.userData.base=g.position.clone();gridGroup.add(g);gridGroup.userData.people.push(g);if(gold)goldHuman=g;}
  const crown=new THREE.Group();goldHuman.userData.head.add(crown);crown.position.y=.30;
@@ -145,7 +146,9 @@ function renderWorld(time){groups.forEach(g=>g.visible=false);const tt=time;
  } else if(tt<26){
   roadGroup.visible=true;const q=phase(tt,18,26),turn=ease(phase(tt,18,20.5)),follow=mix(-4,9,ease(phase(tt,19,26)));
   framing(mobile?14:15,mix(-5,0,turn),mix(6,24,turn),mix(10,follow+.02,turn),0,0,follow);
-  const r=path.getPoint(mix(.2,.76,q)),direction=path.getTangent(mix(.2,.76,q));roadHuman.position.copy(r);roadHuman.position.y=.03;roadHuman.rotation.y=Math.atan2(direction.x,direction.z);posePerson(roadHuman,motionClock,1);
+  const u=mix(.2,.76,q),r=path.getPoint(u),direction=path.getTangent(u),side=new THREE.Vector3(-direction.z,0,direction.x).normalize(),heading=Math.atan2(direction.x,direction.z);
+  roadHuman.position.copy(r).addScaledVector(side,-.3);roadHuman.position.y=.03;roadHuman.rotation.y=heading;posePerson(roadHuman,motionClock,1);
+  const g=Math.min(1,u+.003),gr=path.getPoint(g),gd=path.getTangent(g),gs=new THREE.Vector3(-gd.z,0,gd.x).normalize();guideHuman.position.copy(gr).addScaledVector(gs,.32);guideHuman.position.y=.03;guideHuman.rotation.y=Math.atan2(gd.x,gd.z)+Math.sin(motionClock*.9)*.18;posePerson(guideHuman,motionClock+.11,1);
  } else if(tt<33){
   gridGroup.visible=true;spotlightGroup.visible=true;materialGray.color.set('#352026');
   const reveal=ease(phase(tt,26,28));
