@@ -19,6 +19,7 @@
     <div id="stage">
       <canvas id="world" aria-hidden="true"></canvas>
       <div id="black-panel"></div>
+      <div id="fill" aria-hidden="true"></div>
       <div class="marquee" id="marquee" aria-hidden="true">NOTRE MÉTHODE NOTRE MÉTHODE</div>
 
       <section class="scene intro" data-scene="intro" aria-labelledby="intro-title">
@@ -70,13 +71,13 @@
           <span class="eyebrow">NE TE FONDS PLUS DANS LE DÉCOR.</span>
           <h2>TA VALEUR.<br>ENFIN<br>VISIBLE.</h2>
         </div>
-        <div class="values panel">
-          <article><h3>DIAGNOSTIC CASH</h3><p>Sans détour, sans flatterie.</p></article>
-          <article><h3>TA VOIX</h3><p>Pas un ton emprunté.</p></article>
-          <article><h3>AUTONOMIE À LA FIN</h3><p>Pas de dépendance.</p></article>
-          <article><h3>AUCUNE RECETTE MAGIQUE</h3><p>Du sur-mesure.</p></article>
-          <article><h3>AJUSTEMENT CONTINU</h3><p>On coupe ce qui ne marche pas.</p></article>
-        </div>
+        <ol class="values panel">
+          <li><article><h3>DIAGNOSTIC CASH</h3><p>Sans détour, sans flatterie.</p></article></li>
+          <li><article><h3>TA VOIX</h3><p>Pas un ton emprunté.</p></article></li>
+          <li><article><h3>AUTONOMIE À LA FIN</h3><p>Pas de dépendance.</p></article></li>
+          <li><article><h3>AUCUNE RECETTE MAGIQUE</h3><p>Du sur-mesure.</p></article></li>
+          <li><article><h3>AJUSTEMENT CONTINU</h3><p>On coupe ce qui ne marche pas.</p></article></li>
+        </ol>
       </section>
 
       <section class="scene flight" data-scene="flight">
@@ -84,20 +85,24 @@
           <span class="eyebrow">PLUS LOIN QUE LA RECOMMANDATION.</span>
           <h2>ON VIENT<br>TE CHERCHER.</h2>
         </div>
-        <p class="flight-copy panel">Consultant. Freelance. Coach. Formateur. Solopreneur.<br>Tu sais ce que tu vaux. Maintenant, on le sait aussi.</p>
+        <div class="flight-copy panel">
+          <ul class="personas" aria-label="Pour qui">
+            <li>Consultant</li><li>Freelance</li><li>Coach</li><li>Formateur</li><li>Solopreneur</li>
+          </ul>
+          <p>Tu sais ce que tu vaux. <strong>Maintenant, on le sait aussi.</strong></p>
+        </div>
       </section>
 
       <section class="scene proof" data-scene="proof">
-        <div class="proof-title panel">
+        <div class="proof-col panel">
           <span class="eyebrow">JE CONNAIS CE DÉCALAGE.</span>
           <h2>15 ANS À RENDRE<br>LES AUTRES<br><span>VISIBLES.</span></h2>
           <div class="brands"><span>NIKE</span><span>VANS</span><span>NBA AFRICA</span></div>
-        </div>
-        <div class="proof-copy panel">
-          <p>«&nbsp;Le travail était bon.<br>Mais mon nom n’était<br>jamais dessus.&nbsp;»</p>
+          <blockquote>«&nbsp;Le travail était bon. Mais mon nom n’était jamais dessus.&nbsp;»</blockquote>
           <p>J’ai passé 15 ans à créer de l’engouement pour d’autres marques que la mienne.</p>
           <p>Ton client connaît le résultat que tu lui as apporté. Jamais le nom derrière. Voilà pourquoi je sais où ça bloque, chez toi aussi.</p>
         </div>
+        <p class="proof-sign" aria-hidden="true">Cette fois, le nom est dessus.</p>
       </section>
 
       <section class="scene finale" data-scene="finale">
@@ -116,12 +121,17 @@
       <img class="logo-dark" src="sauti-sombre.png" alt="" aria-hidden="true" width="1300" height="450">
       <img class="logo-warm" src="sauti-orange.png" alt="" aria-hidden="true" width="1300" height="450">
       <img class="logo-accent" src="sauti-signature.png" alt="" aria-hidden="true" width="1300" height="450">
+      <img class="logo-light-v" src="sauti-clair-vide.png" alt="" aria-hidden="true" width="1300" height="450">
+      <img class="logo-dark-v" src="sauti-sombre-vide.png" alt="" aria-hidden="true" width="1300" height="450">
+      <img class="logo-accent-v" src="sauti-signature-vide.png" alt="" aria-hidden="true" width="1300" height="450">
     </a>
     <nav aria-label="Navigation">
       <button type="button" data-go="9.4">La méthode</button>
-      <button type="button" data-go="40.5">On en parle <span aria-hidden="true">↗</span></button>
+      <button type="button" data-go="44.5">On en parle <span aria-hidden="true">↗</span></button>
     </nav>
   </header>
+
+  <div id="drop" aria-hidden="true"></div>
 
   <div class="film-controls" id="controls">
     <div class="controls-top">
@@ -131,7 +141,7 @@
       <button type="button" id="restart" aria-label="Recommencer l’animation">↺</button>
     </div>
     <label class="sr-only" for="timeline">Position dans l’animation, en secondes</label>
-    <input id="timeline" type="range" min="0" max="42" step="0.01" value="0" aria-valuetext="Début : construire">
+    <input id="timeline" type="range" min="0" max="48" step="0.01" value="0" aria-valuetext="Début : construire">
   </div>
 
   <section class="text-page" id="texte">
