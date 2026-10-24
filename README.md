@@ -1,8 +1,10 @@
-# SAUTI — Ta valeur en mouvement
+# SAUTI, ta valeur en mouvement
 
 Site animé au défilement (Three.js r170 + Anton), tous les fichiers à la racine.
 
-Le point rouge du logo tombe au premier coup de scroll, devient un ballon en 3D, rebondit sur la grue puis au sol, et accompagne le personnage du chapitre 1 au chapitre 4. À la fin du 4, il remplit l'écran et fait passer le site au rouge.
+Le point rouge du logo tombe au premier coup de scroll, devient un ballon en 3D, rebondit sur le titre « Construisons ta visibilité », puis sur le texte en haut à droite, et finit sa course à côté du personnage. Il l'accompagne ensuite du chapitre 1 au chapitre 4.
+
+Palette stricte : #ff4328, #fffefa, #000000 (textes, fonds, logos, matières 3D). À la fin du 4, il remplit l'écran et fait passer le site au rouge.
 
 ## Lancer en local
 
@@ -22,8 +24,9 @@ Puis ouvrir http://localhost:8080 (un serveur local est nécessaire : le script 
 
 ## Réglages du ballon (motion.js)
 
-- `DROP0`, `DROP1` : début de la chute et impact sur la grue (en secondes de film, sur 48).
-- `BOUNCE1` à `BOUNCE4` : rebonds au sol.
+- `DROP0` : départ du point depuis le logo (en secondes de film, sur 48).
+- `HIT1`, `HIT2` : rebond sur le titre, puis sur le texte en haut à droite.
+- `LAND`, `BOUNCE2` à `BOUNCE4` : arrivée au sol et petits rebonds à côté du personnage.
 - `FILL0`, `FILL1` : début et fin du remplissage rouge à la fin du chapitre 4.
 - Chapitre 6 (33 à 38 s) : le ballon devient un signal et les gens viennent entourer le personnage.
 - Chapitre 7 (38 à 44 s) : le ballon allume NIKE, VANS et NBA AFRICA, puis se pose sur le panneau SAUTI à la place du point du logo.
